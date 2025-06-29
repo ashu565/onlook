@@ -70,7 +70,7 @@ export class ChatCodeManager {
 
             const selectedWebviews = this.editorEngine.frames.selected;
             for (const frame of selectedWebviews) {
-                await this.editorEngine.ast.refreshAstDoc(frame.view);
+                this.editorEngine.ast.refreshAstDoc(frame.view);
             }
 
             setTimeout(() => {

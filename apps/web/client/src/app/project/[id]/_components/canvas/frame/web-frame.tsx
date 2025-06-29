@@ -73,6 +73,9 @@ export const WebFrameComponent = observer(
                 messenger,
                 methods: {
                     getFrameId: () => frame.id,
+                    handleFrameViewEvent(event) {
+                        editorEngine.frameViewEventHandler.handleEvents(event);
+                    },
                 } satisfies PenpalParentMethods,
             });
 
@@ -176,6 +179,7 @@ export const WebFrameComponent = observer(
                 isChildTextEditable: promisifyMethod(penpalChild?.isChildTextEditable),
                 handleBodyReady: promisifyMethod(penpalChild?.handleBodyReady),
                 captureScreenshot: promisifyMethod(penpalChild?.captureScreenshot),
+                listenForFrameViewEvents: promisifyMethod(penpalChild?.listenForFrameViewEvents),
             };
 
             // Register the iframe with the editor engine

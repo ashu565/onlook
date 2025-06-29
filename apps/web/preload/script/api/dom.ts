@@ -1,6 +1,7 @@
-import { EditorAttributes } from '@onlook/constants';
+import { EditorAttributes, FrameViewEvents } from '@onlook/constants';
 import type { LayerNode } from '@onlook/models';
 import debounce from 'lodash/debounce';
+import { penpalParent } from '../index';
 import { isValidHtmlElement } from '../helpers/dom';
 import { getInstanceId, getOid, getOrAssignDomId } from '../helpers/ids';
 import { getFrameId } from './state';
@@ -26,6 +27,22 @@ const processDebounced = debounce(async (root: HTMLElement) => {
     if (!rootNode) {
         console.warn('Root node not found');
         return false;
+    }
+    if (penpalParent) {
+        try {
+            await penpalParent.handleFrameViewEvent({
+                action: FrameViewEvents.DOM_PROCESSED,
+                args: {
+                    frameId,
+                    layerMap: Object.fromEntries(layerMap),
+                    rootNode
+                }
+            });
+        } catch (error) {
+            console.error('Failed to send DOM processed data to parent:', error);
+        }
+    } else {
+        console.warn('penpalParent not available, cannot send DOM processed data');
     }
 
     return true;

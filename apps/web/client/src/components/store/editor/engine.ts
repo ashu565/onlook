@@ -25,6 +25,7 @@ import { StateManager } from './state';
 import { StyleManager } from './style';
 import { TextEditingManager } from './text';
 import { ThemeManager } from './theme';
+import { FrameViewEventHandler } from './event-handler';
 
 export class EditorEngine {
     readonly chat: ChatManager;
@@ -48,6 +49,7 @@ export class EditorEngine {
     readonly group: GroupManager = new GroupManager(this);
     readonly ast: AstManager = new AstManager(this);
     readonly action: ActionManager = new ActionManager(this);
+    readonly frameViewEventHandler: FrameViewEventHandler = new FrameViewEventHandler(this);
     readonly style: StyleManager = new StyleManager(this);
     readonly code: CodeManager = new CodeManager(this);
     readonly ide: IDEManager = new IDEManager(this);
